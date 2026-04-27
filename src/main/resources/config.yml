@@ -1,0 +1,117 @@
+config-version: 67
+language: en
+debug: false
+
+limits:
+  max-bots: 1000
+  user-bot-limit: 1
+  spawn-presets:
+    - 1
+    - 5
+    - 10
+    - 15
+    - 20
+
+spawn-cooldown: 0
+
+persistence:
+  enabled: true
+
+join-delay:
+  min: 0
+  max: 1
+
+leave-delay:
+  min: 0
+  max: 1
+
+bot-name:
+  mode: random
+  admin-format: "{bot_name}"
+  user-format: "bot-{spawner}-{num}"
+
+skin:
+  mode: player
+  guaranteed-skin: true
+  clear-cache-on-reload: true
+
+body:
+  enabled: true
+  max-health: 20.0
+  pick-up-items: false
+  pick-up-xp: true
+  respawn: true
+  respawn-delay: 60
+
+tab-list:
+  enabled: true
+
+server-list:
+  count-bots: true
+
+chat:
+  enabled: true
+  interval-min: 30
+  interval-max: 120
+  global-chat: false
+
+ai:
+  enabled: false
+  provider: openai
+  openai:
+    api-key: ""
+    model: gpt-4o-mini
+  anthropic:
+    api-key: ""
+    model: claude-3-haiku-20240307
+  gemini:
+    api-key: ""
+    model: gemini-1.5-flash
+  groq:
+    api-key: ""
+    model: llama3-8b-8192
+  ollama:
+    url: "http://localhost:11434"
+    model: llama3
+
+database:
+  enabled: false
+  mode: sqlite
+  mysql:
+    host: localhost
+    port: 3306
+    database: fpp
+    username: root
+    password: ""
+
+pathfinding:
+  parkour: false
+  break-blocks: false
+  place-blocks: false
+
+attack:
+  mob-default-range: 16.0
+  mob-default-priority: closest
+
+auto-eat:
+  enabled: true
+
+auto-place-bed:
+  enabled: true
+
+swim-ai:
+  enabled: true
+
+peak-hours:
+  enabled: false
+  timezone: UTC
+  schedules: []
+
+swap:
+  enabled: false
+  interval-min: 300
+  interval-max: 600
+
+badword-filter:
+  enabled: false
+  use-global-list: false

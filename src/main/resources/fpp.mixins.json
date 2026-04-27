@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "me.bill.fpp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerManagerMixin",
+    "ServerPlayerEntityMixin",
+    "PlayerEntityMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
