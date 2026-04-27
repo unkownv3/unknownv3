@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "fpp",
+  "version": "${version}",
+  "name": "Fake Player Plugin (FPP)",
+  "description": "Advanced Fake Player Spoofer for Fabric 1.21.1 - Ported from Paper",
+  "authors": [
+    "el_pepes",
+    "unknownv3"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/plugin/fake-player-plugin-(fpp)",
+    "sources": "https://github.com/unkownv3/unknownv3"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/fpp/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "me.bill.fakePlayerPlugin.FakePlayerPluginFabric"
+    ]
+  },
+  "mixins": [
+    "fpp.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "fabric-api": "*"
+  }
+}
