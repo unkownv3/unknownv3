@@ -1,0 +1,15 @@
+accessWidener v2 named
+
+# ServerPlayer constructor access
+accessible class net/minecraft/server/network/ConnectedClientData
+
+# Player list access
+accessible method net/minecraft/server/PlayerManager onPlayerConnect (Lnet/minecraft/network/ClientConnection;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/server/network/ConnectedClientData;)V
+
+# Entity fields for movement
+accessible field net/minecraft/entity/Entity prevX D
+accessible field net/minecraft/entity/Entity prevY D
+accessible field net/minecraft/entity/Entity prevZ D
+
+# ServerPlayerEntity fields
+accessible field net/minecraft/server/network/ServerPlayerEntity networkHandler Lnet/minecraft/server/network/ServerPlayNetworkHandler;
