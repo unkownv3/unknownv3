@@ -95,8 +95,13 @@ public class DamageListener implements Listener {
                 allay = player.getWorld().spawn(player.getLocation().add(0, 2, 0), org.bukkit.entity.Allay.class);
                 abilityManager.setAllayCompanion(player.getUniqueId(), allay);
             }
-            player.setHealth(Math.min(maxHealth, player.getHealth() + 4.0));
-            player.getWorld().spawnParticle(org.bukkit.Particle.HEART, player.getLocation().add(0, 2, 0), 5, 0.5, 0.5, 0.5, 0);
+            // Schedule heal for after damage is applied
+            org.bukkit.Bukkit.getScheduler().runTask(plugin, () -> {
+                if (player.isOnline() && !player.isDead()) {
+                    player.setHealth(Math.min(maxHealth, player.getHealth() + 4.0));
+                    player.getWorld().spawnParticle(org.bukkit.Particle.HEART, player.getLocation().add(0, 2, 0), 5, 0.5, 0.5, 0.5, 0);
+                }
+            });
         }
     }
 }

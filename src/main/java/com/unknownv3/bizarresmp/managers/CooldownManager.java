@@ -49,7 +49,7 @@ public class CooldownManager {
             if (recharged > 0) {
                 currentCharges = Math.min(maxCharges, currentCharges + recharged);
                 chargeMap.put(playerId, currentCharges);
-                timerMap.put(playerId, System.currentTimeMillis());
+                timerMap.put(playerId, lastUse + (long) recharged * rechargeTimeMs);
             }
         }
 

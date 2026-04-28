@@ -761,9 +761,14 @@ public class UseAbilityListener implements Listener {
         cooldownManager.setCooldown(id, "coast_wave", 8000);
 
         Location eyeLoc = player.getEyeLocation();
-        Vector direction = eyeLoc.getDirection().normalize();
-        direction.setY(0);
-        direction.normalize();
+        Vector rawDir = eyeLoc.getDirection().normalize();
+        rawDir.setY(0);
+        if (rawDir.lengthSquared() < 0.001) {
+            float yaw = player.getLocation().getYaw();
+            double rad = Math.toRadians(yaw);
+            rawDir = new Vector(-Math.sin(rad), 0, Math.cos(rad));
+        }
+        final Vector direction = rawDir.normalize();
 
         player.getWorld().playSound(eyeLoc, Sound.ENTITY_PLAYER_SPLASH_HIGH_SPEED, 2.0f, 0.8f);
 
@@ -875,16 +880,21 @@ public class UseAbilityListener implements Listener {
     // ===== VEX: Fangfooted =====
     private void handleVex(Player player) {
         UUID id = player.getUniqueId();
+
+        // Allow manual deactivation even during cooldown
+        if (abilityManager.isFangTrailActive(id)) {
+            abilityManager.setFangTrailActive(id, false);
+            player.sendMessage(Component.text("Fangfooted deactivated.", NamedTextColor.GRAY));
+            return;
+        }
+
         if (cooldownManager.isOnCooldown(id, "vex_fang")) {
             long remaining = cooldownManager.getRemainingCooldown(id, "vex_fang") / 1000;
             player.sendActionBar(Component.text("Fangfooted on cooldown: " + remaining + "s", NamedTextColor.RED));
             return;
         }
 
-        boolean active = abilityManager.isFangTrailActive(id);
-        abilityManager.setFangTrailActive(id, !active);
-
-        if (!active) {
+        {
             cooldownManager.setCooldown(id, "vex_fang", 25000);
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_EVOKER_PREPARE_ATTACK, 1.0f, 1.0f);
             player.sendMessage(Component.text("Fangfooted activated! You now leave a trail of evoker fangs!", NamedTextColor.DARK_PURPLE));
@@ -909,9 +919,6 @@ public class UseAbilityListener implements Listener {
                     ticks += 4;
                 }
             }.runTaskTimer(plugin, 0, 4);
-        } else {
-            abilityManager.setFangTrailActive(id, false);
-            player.sendMessage(Component.text("Fangfooted deactivated.", NamedTextColor.GRAY));
         }
     }
 
