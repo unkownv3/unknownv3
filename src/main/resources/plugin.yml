@@ -1,0 +1,6 @@
+name: Unknownv3sBizzareSMP
+version: '${project.version}'
+main: com.unknownv3.bizarresmp.BizarreSMP
+api-version: '1.21'
+description: A bizarre SMP plugin with unique armor trim abilities
+author: unknownv3
