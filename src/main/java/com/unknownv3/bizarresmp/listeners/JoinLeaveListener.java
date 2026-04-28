@@ -4,7 +4,6 @@ import com.unknownv3.bizarresmp.BizarreSMP;
 import com.unknownv3.bizarresmp.managers.AbilityManager;
 import com.unknownv3.bizarresmp.managers.TrimManager;
 import com.unknownv3.bizarresmp.trims.TrimType;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,8 +13,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 public class JoinLeaveListener implements Listener {
 
@@ -33,17 +30,18 @@ public class JoinLeaveListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        // Delayed check for trim (armor may not be loaded instantly)
+        // HOST: Silent Arrival - suppress join message synchronously
+        TrimType syncTrim = trimManager.getPlayerTrim(player);
+        if (syncTrim == TrimType.HOST) {
+            event.joinMessage(null);
+        }
+
+        // Delayed check for trim-based setup (armor may not be loaded instantly)
         new BukkitRunnable() {
             @Override
             public void run() {
                 TrimType trim = trimManager.getPlayerTrim(player);
                 if (trim == null) return;
-
-                // HOST: Silent Arrival - No join message
-                if (trim == TrimType.HOST) {
-                    event.joinMessage(null);
-                }
 
                 // HOST: Never Online - Don't appear in player list
                 if (trim == TrimType.HOST) {

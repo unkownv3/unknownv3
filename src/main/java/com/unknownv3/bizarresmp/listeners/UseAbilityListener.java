@@ -529,6 +529,10 @@ public class UseAbilityListener implements Listener {
                     }
                 }
                 return;
+            } else {
+                // Not looking at bomb - don't allow throwing a new one while one exists
+                player.sendActionBar(Component.text("Look at your bomb and right-click to detonate it!", NamedTextColor.GOLD));
+                return;
             }
         }
 

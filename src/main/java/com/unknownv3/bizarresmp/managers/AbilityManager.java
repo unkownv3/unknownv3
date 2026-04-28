@@ -330,6 +330,8 @@ public class AbilityManager {
         cloakedPlayers.remove(playerId);
         removeVineHook(playerId);
         fangTrailActive.remove(playerId);
+        Entity allay = allayCompanions.remove(playerId);
+        if (allay != null && !allay.isDead()) allay.remove();
         removeRavagerMount(playerId);
     }
 }
