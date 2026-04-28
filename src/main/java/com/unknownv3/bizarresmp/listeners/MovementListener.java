@@ -49,6 +49,7 @@ public class MovementListener implements Listener {
             case SPIRE -> handleElytraPassive(player);
             case DUNE -> handleBurrowMovement(player);
             case SILENCE -> handleSilencePassive(player);
+            case VEX -> handleVexGlideReady(player);
             default -> {}
         }
     }
@@ -67,6 +68,14 @@ public class MovementListener implements Listener {
                 abilityManager.setDoubleJumpReady(player.getUniqueId(), true);
                 player.setAllowFlight(true);
             }
+        }
+    }
+
+    // VEX: Enable flight toggle on ground so Allay Glide can trigger mid-air
+    private void handleVexGlideReady(Player player) {
+        if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) return;
+        if (player.isOnGround() && !player.getAllowFlight()) {
+            player.setAllowFlight(true);
         }
     }
 
@@ -95,6 +104,7 @@ public class MovementListener implements Listener {
         if (trim == TrimType.VEX && player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
             if (!player.isOnGround()) {
                 event.setCancelled(true);
+                player.setAllowFlight(false);
                 player.setGliding(true);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 60, 0, false, false));
                 player.getWorld().spawnParticle(Particle.END_ROD, player.getLocation(), 5, 0.3, 0.3, 0.3, 0.02);
